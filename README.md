@@ -1,8 +1,10 @@
 # XStatic
 
-By Jeremy Lindblom
+* Tagline: Static interfaces without static pitfalls.
+* Author: [Jeremy Lindblom](https://twitter.com/jeremeamia)
+* Version 0.1.0
 
-Static interfaces without static pitfalls.
+**Request for Feedback:** Please contact me and let me know what you think about this idea. Thanks.
 
 ## Intro
 
@@ -100,3 +102,8 @@ namespace {
     $app->run();
 }
 ```
+
+## Inspiration
+
+This library is heavily inspired by the [Facades](http://laravel.com/docs/facades) feature in the
+[Laravel 4 Framework](http://laravel.com/).
