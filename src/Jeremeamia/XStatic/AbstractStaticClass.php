@@ -2,32 +2,21 @@
 
 namespace Jeremeamia\XStatic;
 
+/**
+ * The basic implementation of the StaticClassInterface class with makes it easier to create static class interfaces
+ */
 abstract class AbstractStaticClass implements StaticClassInterface
 {
     /**
-     * @var ContainerInterface
+     * @var ContainerInterface The container that contains the object instances
      */
     static protected $container;
 
-    /**
-     * @param ContainerInterface $container
-     */
     public static function setContainer(ContainerInterface $container)
     {
         static::$container = $container;
     }
 
-    /**
-     * @return ContainerInterface
-     */
-    public static function getContainer()
-    {
-        return static::$container;
-    }
-
-    /**
-     * @return mixed
-     */
     public static function getInstance()
     {
         return static::$container->get(static::getStaticAlias());
