@@ -2,6 +2,8 @@
 
 namespace Jeremeamia\XStatic;
 
+use Jeremeamia\Acclimate\ContainerInterface;
+
 /**
  * XStatic allows you to register aliases to static classes so you can create static interfaces, or "facades", to an
  * object instance in a container
@@ -16,7 +18,7 @@ class XStatic
     /**
      * @var array Information about aliases that have been loaded
      */
-    private static $loadedAliases = array();
+    private $loadedAliases = array();
 
     /**
      * @var array Registered aliases to static class interfaces
@@ -34,8 +36,8 @@ class XStatic
      */
     public function __construct(ContainerInterface $container, array $aliases = array())
     {
-        $this->setContainer($container);
-        $this->setAliases($aliases);
+        $this->container = $container;
+        $this->aliases = $aliases;
     }
 
     /**
@@ -71,51 +73,18 @@ class XStatic
      * @param string $alias An alias to associate with a static class
      * @param string $fqcn  An FQCN to a static class
      *
+     * @throws \RuntimeException if you try to add an alias that has already been added
      * @return $this
      */
     public function addAlias($alias, $fqcn)
     {
-        $this->aliases[$alias] = $fqcn;
+        if (isset($this->aliases[$alias])) {
+            throw new \RuntimeException("The alias, {$alias}, has already been added and cannot be changed.");
+        } else {
+            $this->aliases[$alias] = $fqcn;
+        }
 
         return $this;
-    }
-
-    /**
-     * Removes an alias and disassociates it from a static class interface
-     *
-     * @param string $alias The alias to disassociate from a static class
-     *
-     * @return $this
-     */
-    public function removeAlias($alias)
-    {
-        unset($this->aliases[$alias]);
-
-        return $this;
-    }
-
-    /**
-     * Sets the entire associative array of aliases
-     *
-     * @param array $aliases An associative array of aliases to static class FQCNs
-     *
-     * @return $this
-     */
-    public function setAliases(array $aliases)
-    {
-        $this->aliases = $aliases;
-
-        return $this;
-    }
-
-    /**
-     * Returns information about aliases that have been loaded included what namespace they were loaded from
-     *
-     * @return array
-     */
-    public function getLoadedAliases()
-    {
-        return self::$loadedAliases;
     }
 
     /**
@@ -140,6 +109,16 @@ class XStatic
     }
 
     /**
+     * Returns information about aliases that have been loaded included what namespace they were loaded from
+     *
+     * @return array
+     */
+    public function getLoadedAliases()
+    {
+        return $this->loadedAliases;
+    }
+
+    /**
      * Records the loading of an alias
      *
      * @param string $alias     The alias that was loaded
@@ -147,13 +126,13 @@ class XStatic
      */
     private function recordLoadedAlias($alias, $namespace)
     {
-        if (!isset(self::$loadedAliases[$alias])) {
-            self::$loadedAliases[$alias] = array(
+        if (!isset($this->loadedAliases[$alias])) {
+            $this->loadedAliases[$alias] = array(
                 'class'      => $this->aliases[$alias],
                 'namespaces' => array(),
             );
         }
 
-        self::$loadedAliases[$alias]['namespaces'][] = trim($namespace, '\\');
+        $this->loadedAliases[$alias]['namespaces'][] = trim($namespace, '\\');
     }
 }

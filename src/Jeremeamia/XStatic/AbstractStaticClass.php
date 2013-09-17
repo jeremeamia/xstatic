@@ -2,8 +2,10 @@
 
 namespace Jeremeamia\XStatic;
 
+use Jeremeamia\Acclimate\ContainerInterface;
+
 /**
- * The basic implementation of the StaticClassInterface class with makes it easier to create static class interfaces
+ * The implementation of the basic moving parts of a static class interface
  */
 abstract class AbstractStaticClass implements StaticClassInterface
 {

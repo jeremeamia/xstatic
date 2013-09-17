@@ -2,14 +2,25 @@
     "name": "jeremeamia/xstatic",
     "description": "Static interfaces without static pitfalls",
     "license": "MIT",
+    "keywords": ["static", "static interface", "facade", "facades", "interface", "container"],
     "authors": [
         {
             "name": "Jeremy Lindblom",
             "email": "jeremeamia@gmail.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/jeremeamia/acclimate"
+        }
+    ],
     "require": {
-        "php": ">=5.3.3"
+        "php": ">=5.3.3",
+        "jeremeamia/acclimate": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
         "psr-0": {
