@@ -1,109 +1,135 @@
 # XStatic
 
-* Tagline: Static interfaces without static pitfalls.
-* Author: [Jeremy Lindblom](https://twitter.com/jeremeamia)
-* Version 0.1.0
+*Static interfaces without the static pitfalls.*
 
-**Request for Feedback:** Please contact me and let me know what you think about this idea. Thanks.
+by [Jeremy Lindblom](https://twitter.com/jeremeamia)
+
+Version 0.1.0
 
 ## Intro
 
 Using static methods and classes makes your code harder to test. This is because your code becomes tightly coupled to
 the class being referenced statically, and mocking static methods for unit tests is difficult. For this and other
-reasons, using static methods is generally discouraged by object-oriented programming (OOP) purists. Generally, techniques involving design patterns like *Service Locator* and *Dependency Injection* (DI) are preferred.
+reasons, using static methods is generally discouraged by object-oriented programming (OOP) purists. Generally,
+techniques involving design patterns like *Service Locator* and *Dependency Injection* (DI) are preferred for managing
+object dependencies and composition.
 
-However, PHP developers that prefer frameworks like CodeIgniter, Laravel, Kohana, or FuelPHP are very accustomed to
-using static methods. In fact, it is an encouraged practice among these developers, who argue that it makes the code
-more readable and contributes to *Rapid Application Development* (RAD).
+However, PHP developers that prefer frameworks like CodeIgniter, Laravel, Kohana, and FuelPHP are very accustomed to
+using static methods. In fact, it is a generally encouraged practice among these developers, who argue that it makes the
+code more readable and contributes to *Rapid Application Development* (RAD).
 
 Fortunately, in Laravel 4, Taylor Otwell developed a compromise. Laravel 4 has a concept called *Facades*, which act
-as a static interface to an actual object instance stored in a dependency injection container. The static interface is
-linked to the container by defining class aliases using PHP's `class_alias` function.
+as a static interface to an actual object instance stored in a service container. The static interface is linked to
+the container by defining class aliases using PHP's `class_alias()` function.
 
-**XStatic** is a library for enabling static interfaces in a similar way to the approach taken by Laravel 4. It's called
-"XStatic", because it takes the static-ness out of static classes. It is also pronounced like the word "ecstatic", so I
-hope it makes you happy.
+**XStatic** is a library for enabling static interfaces (or "facades") in a similar way to the approach taken by
+Laravel 4. It's called "XStatic", because it removes the static-ness static classes. It is also pronounced like the word
+"ecstatic", because I hope that it makes developers happy.
+
+Sounds pretty good so far, right? Well, there are two additional features that really make XStatic cool:
+
+1. **It works with any framework's service container** - XStatic relies on the `ContainerInterface` of the
+   [Acclimate](https://github.com/jeremeamia/acclimate) library. Acclimate can be used to adapt third-party containers
+   to its normalized container interface, which is what XStatic depends on.
+2. **It works within any namespace** - XStatic injects an autoloader onto the stack, so no matter what namespace or
+   scope you try to reference your aliased static interface from, it will pass through the XStatic autoloader and create
+   the corresponding `class_alias` needed to make it work.
 
 ## Usage
+
+To show you how to use XStatic, I will show you a simple [Silex](http://silex.sensiolabs.org/) application.
+
+Your application bootstrap:
 
 ```php
 <?php
 
-// Setup autoloading
-namespace {
-    require __DIR__ . '/../vendor/autoload.php';
-}
+// Include the Composer autoloader
+require 'vendor/autoload.php';
 
-// Define a service layer for the application
-namespace My\Lib\Service {
+use Jeremeamia\Acclimate\Acclimate;
+use Jeremeamia\XStatic\XStatic;
+use Silex\Application;
+use Silex\Provider\TwigServiceProvider;
+
+// Setup your app
+$app = new Application;
+$app->register(new TwigServiceProvider, array(
+    'twig.path' => __DIR__ . '/templates',
+));
+$app['db'] = function () {
+    return new PDO(mysql:dbname=testdb;host=127.0.0.1', 'dbuser', 'dbpass');
+};
+$app->get('/', 'MyApp\Controller\Home::index'); // Routes "/" to a controller object
+
+// Setup XStatic
+$acclimate = new Acclimate();
+$xstatic = new XStatic($acclimate->adaptContainer($app));
+$xstatic->addAlias('View', 'MyApp\Service\StaticTwig');
+$xstatic->addAlias('DB', 'MyApp\Service\StaticPdo');
+$xstatic->enableStaticInterfaces();
+
+$app->run();
+```
+
+Your static class interfaces:
+
+```php
+namespace MyApp\Service
+{
     use Jeremeamia\XStatic\AbstractStaticClass;
 
-    class Adder {
-        public function add($a, $b) {
-            return $a + $b;
+    class StaticPdo extends AbstractStaticClass
+    {
+        public function getStaticAlias()
+        {
+            return 'db';
         }
     }
 
-    class StaticAdder extends AbstractStaticClass {
-        public static function getStaticAlias() {
-            return 'adder';
+    class StaticTwig extends AbstractStaticClass
+    {
+        public function getStaticAlias()
+        {
+            return 'twig';
         }
     }
-}
-
-// Define a very basic DI container
-namespace My\Lib\Di {
-    use Jeremeamia\XStatic\ContainerInterface;
-
-    class Container implements ContainerInterface {
-        private $things = array();
-        public function __construct(array $things) {
-            $this->things = $things;
-        }
-        public function get($name) {
-            if ($this->has($name)) return $this->things[$name]; else die('FAIL!');
-        }
-        public function has($name) {
-            return isset($this->things[$name]);
-        }
-    }
-}
-
-// Define the application
-namespace My\App {
-    class App {
-        public function run() {
-            // Use the static interface to Adder
-            echo Adder::add(4, 6);
-            // 10
-        }
-    }
-}
-
-// Demonstrate an app bootstraping process with XStatic
-namespace {
-    use Jeremeamia\XStatic\XStatic;
-    use My\Lib\Di\Container;
-    use My\Lib\Service\Adder;
-    use My\App\App;
-
-    // Setup container
-    $container = new Container(array(
-        'adder' => new Adder()
-    ));
-
-    // Setup XStatic
-    $x = new XStatic($container);
-    $x->addAlias('Adder', 'My\Lib\Service\StaticAdder');
-    $x->enableStaticInterfaces();
-
-    // Run App
-    $app = new App;
-    $app->run();
 }
 ```
+
+Your controller:
+
+```php
+namespace MyApp\Controller;
+
+class Home
+{
+    public function index()
+    {
+        // It just works!
+        View::render('home.index', array(
+            'articles' => DB::query('SELECT * FROM articles')
+        );
+    }
+}
+```
+
+Pretty cool, huh? Some interesting things to note about this example is that we've actually hidden the fact that we are
+using PDO and Twig from the controller. We could easily swap something else in that uses the same interfaces, and the
+controller code would not need need to be altered. All we would need to do is put different objects into the
+application container. In fact, this is how testing the controller would work. The test would be bootstrapped with mock
+or stub objects put into the application container.
+
+*Static interfaces without the static pitfalls.*
 
 ## Inspiration
 
 This library is heavily inspired by the [Facades](http://laravel.com/docs/facades) feature in the
 [Laravel 4 Framework](http://laravel.com/).
+
+## Disclaimer
+
+I would not consider myself to be *for* or *against* the use of static interfaces (or "facades" in Laravel), but I do
+think it is cool that you can write code this way and have it work and still be testable. I hope that developers,
+especially library and framework developers, find ways to use, but not require, these static interfaces in order to make
+their projects appeal to a wider range of PHP developers. Feedback is welcome. :-)
