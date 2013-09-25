@@ -58,7 +58,7 @@ $app->register(new TwigServiceProvider, array(
     'twig.path' => __DIR__ . '/templates',
 ));
 $app['db'] = function () {
-    return new PDO(mysql:dbname=testdb;host=127.0.0.1', 'dbuser', 'dbpass');
+    return new PDO('mysql:dbname=testdb;host=127.0.0.1', 'dbuser', 'dbpass');
 };
 $app->get('/', 'MyApp\Controller\Home::index'); // Routes "/" to a controller object
 
@@ -116,9 +116,9 @@ class Home
 
 Pretty cool, huh? Some interesting things to note about this example is that we've actually hidden the fact that we are
 using PDO and Twig from the controller. We could easily swap something else in that uses the same interfaces, and the
-controller code would not need need to be altered. All we would need to do is put different objects into the
-application container. In fact, this is how testing the controller would work. The test would be bootstrapped with mock
-or stub objects put into the application container.
+controller code would not need to be altered. All we would need to do is put different objects into the application
+container. In fact, this is *exactly* how testing the controller would work. The test would be bootstrapped with mock or
+stub objects put into the application container.
 
 *Static interfaces without the static pitfalls.*
 
@@ -130,6 +130,8 @@ This library is heavily inspired by the [Facades](http://laravel.com/docs/facade
 ## Disclaimer
 
 I would not consider myself to be *for* or *against* the use of static interfaces (or "facades" in Laravel), but I do
-think it is cool that you can write code this way and have it work and still be testable. I hope that developers,
-especially library and framework developers, find ways to use, but not require, these static interfaces in order to make
-their projects appeal to a wider range of PHP developers. Feedback is welcome. :-)
+think it is cool that you can write code this way and have it work and still be testable. I foresee that developers,
+especially library and framework developers, may find ways to use, but not require, these static interfaces in order to
+make their projects appeal to a wider range of PHP developers.
+
+Feedback is welcome. :-)
