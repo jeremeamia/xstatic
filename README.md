@@ -4,7 +4,7 @@
 
 by [Jeremy Lindblom](https://twitter.com/jeremeamia)
 
-Version 0.1.0
+Version 0.2.0
 
 ## Intro
 

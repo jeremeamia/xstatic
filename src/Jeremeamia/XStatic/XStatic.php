@@ -2,7 +2,7 @@
 
 namespace Jeremeamia\XStatic;
 
-use Jeremeamia\Acclimate\ContainerInterface;
+use Acclimate\Api\Container\ContainerInterface;
 
 /**
  * XStatic allows you to register aliases to static classes so you can create static interfaces, or "facades", to an

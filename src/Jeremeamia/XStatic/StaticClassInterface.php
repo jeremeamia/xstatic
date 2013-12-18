@@ -2,7 +2,7 @@
 
 namespace Jeremeamia\XStatic;
 
-use Jeremeamia\Acclimate\ContainerInterface;
+use Acclimate\Api\Container\ContainerInterface;
 
 /**
  * The interface of a static class interface that is meant to interact with an object instance in a service container

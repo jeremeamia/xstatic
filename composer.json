@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "jeremeamia/acclimate": "dev-master"
+        "acclimate/api": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*"

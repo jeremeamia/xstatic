@@ -2,7 +2,7 @@
 
 namespace Jeremeamia\XStatic;
 
-use Jeremeamia\Acclimate\ContainerInterface;
+use Acclimate\Api\Container\ContainerInterface;
 
 /**
  * The implementation of the basic moving parts of a static class interface

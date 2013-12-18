@@ -2,9 +2,22 @@
 
 namespace Jeremeamia\XStatic\Test;
 
-use Jeremeamia\Acclimate\ArrayContainer;
+use Acclimate\Api\Container\ContainerInterface;
 use Jeremeamia\XStatic\XStatic;
 use Jeremeamia\XStatic\AbstractStaticClass;
+
+class Container extends \ArrayObject implements ContainerInterface
+{
+    public function get($identifier)
+    {
+        return $this[$identifier];
+    }
+
+    public function has($identifier)
+    {
+        return isset($this[$identifier]);
+    }
+}
 
 class StaticQueue extends AbstractStaticClass
 {
@@ -23,8 +36,8 @@ class XStaticTest extends \PHPUnit_Framework_TestCase
     public function testCanLoadAnAlias()
     {
         // Instantiate XStatic and test setters
-        $xStatic = new XStatic($this->getMock('Jeremeamia\Acclimate\ContainerInterface'));
-        $xStatic->setContainer(new ArrayContainer(array('queue' => new \SplQueue)));
+        $xStatic = new XStatic($this->getMock('Acclimate\Api\Container\ContainerInterface'));
+        $xStatic->setContainer(new Container(array('queue' => new \SplQueue)));
         $xStatic->addAlias('Queue', 'Jeremeamia\XStatic\Test\StaticQueue');
 
         // Turn it on and try loading an alias
@@ -45,7 +58,7 @@ class XStaticTest extends \PHPUnit_Framework_TestCase
 
     public function testCannotAddSameAliasMoreThanOnce()
     {
-        $xStatic = new XStatic($this->getMock('Jeremeamia\Acclimate\ContainerInterface'));
+        $xStatic = new XStatic($this->getMock('Acclimate\Api\Container\ContainerInterface'));
         $xStatic->addAlias('foo', 'bar');
 
         $this->setExpectedException('RuntimeException');
