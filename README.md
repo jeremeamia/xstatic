@@ -8,6 +8,8 @@ Version 0.2.0
 
 ## Intro
 
+**TL;DR: XStatic is a library for enabling static interfaces (or "facades") like in Laravel 4.**
+
 Using static methods and classes makes your code harder to test. This is because your code becomes tightly coupled to
 the class being referenced statically, and mocking static methods for unit tests is difficult. For this and other
 reasons, using static methods is generally discouraged by object-oriented programming (OOP) purists. Generally,
@@ -29,8 +31,8 @@ Laravel 4. It's called "XStatic", because it removes the static-ness static clas
 Sounds pretty good so far, right? Well, there are two additional features that really make XStatic cool:
 
 1. **It works with any framework's service container** - XStatic relies on the `ContainerInterface` of the
-   [Acclimate](https://github.com/jeremeamia/acclimate) library. Acclimate can be used to adapt third-party containers
-   to its normalized container interface, which is what XStatic depends on.
+   [Acclimate](https://github.com/jeremeamia/acclimate-container) library. Acclimate can be used to adapt third-party 
+   containers to its normalized container interface, which is what XStatic depends on.
 2. **It works within any namespace** - XStatic injects an autoloader onto the stack, so no matter what namespace or
    scope you try to reference your aliased static interface from, it will pass through the XStatic autoloader and create
    the corresponding `class_alias` needed to make it work.
@@ -47,7 +49,7 @@ Your application bootstrap:
 // Include the Composer autoloader
 require 'vendor/autoload.php';
 
-use Jeremeamia\Acclimate\Acclimate;
+use Acclimate\Container\ContainerAcclimator;
 use Jeremeamia\XStatic\XStatic;
 use Silex\Application;
 use Silex\Provider\TwigServiceProvider;
@@ -63,8 +65,8 @@ $app['db'] = function () {
 $app->get('/', 'MyApp\Controller\Home::index'); // Routes "/" to a controller object
 
 // Setup XStatic
-$acclimate = new Acclimate();
-$xstatic = new XStatic($acclimate->adaptContainer($app));
+$acclimator = new ContainerAcclimator();
+$xstatic = new XStatic($acclimator->acclimate($app));
 $xstatic->addAlias('View', 'MyApp\Service\StaticTwig');
 $xstatic->addAlias('DB', 'MyApp\Service\StaticPdo');
 $xstatic->enableStaticInterfaces();
