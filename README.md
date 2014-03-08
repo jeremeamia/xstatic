@@ -8,7 +8,7 @@ Version 0.2.0
 
 ## Intro
 
-**TL;DR: XStatic is a library for enabling static interfaces (or "facades") like in Laravel 4.**
+**TL;DR: XStatic is a library for enabling static proxy interfaces, like the Laravel 4 "facades", but in any PHP project.**
 
 Using static methods and classes makes your code harder to test. This is because your code becomes tightly coupled to
 the class being referenced statically, and mocking static methods for unit tests is difficult. For this and other
@@ -17,16 +17,13 @@ techniques involving design patterns like *Service Locator* and *Dependency Inje
 object dependencies and composition.
 
 However, PHP developers that prefer frameworks like CodeIgniter, Laravel, Kohana, and FuelPHP are very accustomed to
-using static methods. In fact, it is a generally encouraged practice among these developers, who argue that it makes the
-code more readable and contributes to *Rapid Application Development* (RAD).
+using static methods in their application development. In some cases, it is a generally encouraged practice among these developers, who argue that it makes the code more readable and contributes to *Rapid Application Development* (RAD).
 
 Fortunately, in Laravel 4, Taylor Otwell developed a compromise. Laravel 4 has a concept called *Facades*, which act
-as a static interface to an actual object instance stored in a service container. The static interface is linked to
-the container by defining class aliases using PHP's `class_alias()` function.
+as a static interface, or proxy, to an actual object instance stored in a service container. The static interface is linked to the container by defining class aliases using PHP's `class_alias()` function.
 
-**XStatic** is a library for enabling static interfaces (or "facades") in a similar way to the approach taken by
-Laravel 4. It's called "XStatic", because it removes the static-ness static classes. It is also pronounced like the word
-"ecstatic", because I hope that it makes developers happy.
+**XStatic** is a library for enabling these static proxy interfaces in a similar way to the approach taken by
+Laravel 4 "facades". It's called "XStatic", because it removes the static-ness static classes. It is also pronounced like the word "ecstatic", because I hope that it makes developers happy.
 
 Sounds pretty good so far, right? Well, there are two additional features that really make XStatic cool:
 
@@ -131,8 +128,7 @@ This library is heavily inspired by the [Facades](http://laravel.com/docs/facade
 
 ## Disclaimer
 
-I would not consider myself to be *for* or *against* the use of static interfaces (or "facades" in Laravel), but I do
-think it is cool that you can write code this way and have it work and still be testable. I foresee that developers,
+I would not consider myself to be *for* or *against* the use of static proxy interfaces (or "facades" in Laravel), but I do think it is cool that you can write code this way and have it work and still be testable. I foresee that developers,
 especially library and framework developers, may find ways to use, but not require, these static interfaces in order to
 make their projects appeal to a wider range of PHP developers.
 
