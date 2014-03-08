@@ -1,14 +1,10 @@
 # XStatic
 
-*Static interfaces without the static pitfalls.*
-
-by [Jeremy Lindblom](https://twitter.com/jeremeamia)
-
-Version 0.2.0
+*Static interfaces without the static pitfalls* • by [Jeremy Lindblom](https://twitter.com/jeremeamia) • Version 0.2.0
 
 ## Intro
 
-**TL;DR: XStatic is a library for enabling static proxy interfaces, like the Laravel 4 "facades", but in any PHP project.**
+**TL;DR: XStatic is a library for enabling static proxy interfaces, like Laravel 4 "facades", but in any PHP project.**
 
 Using static methods and classes makes your code harder to test. This is because your code becomes tightly coupled to
 the class being referenced statically, and mocking static methods for unit tests is difficult. For this and other
@@ -19,8 +15,7 @@ object dependencies and composition.
 However, PHP developers that prefer frameworks like CodeIgniter, Laravel, Kohana, and FuelPHP are very accustomed to
 using static methods in their application development. In some cases, it is a generally encouraged practice among these developers, who argue that it makes the code more readable and contributes to *Rapid Application Development* (RAD).
 
-Fortunately, in Laravel 4, Taylor Otwell developed a compromise. Laravel 4 has a concept called *Facades*, which act
-as a static interface, or proxy, to an actual object instance stored in a service container. The static interface is linked to the container by defining class aliases using PHP's `class_alias()` function.
+Fortunately, in Laravel 4, Taylor Otwell developed a compromise. Laravel 4 has a concept called "facades" (Note: Not the same as the [Facade design pattern](http://en.wikipedia.org/wiki/Facade_pattern)). These act as a static interface, or proxy, to an actual object instance stored in a service container. The static interface is linked to the container using a few tricks, including defining class aliases via PHP's `class_alias()` function.
 
 **XStatic** is a library for enabling these static proxy interfaces in a similar way to the approach taken by
 Laravel 4 "facades". It's called "XStatic", because it removes the static-ness static classes. It is also pronounced like the word "ecstatic", because I hope that it makes developers happy.
@@ -29,7 +24,8 @@ Sounds pretty good so far, right? Well, there are two additional features that r
 
 1. **It works with any framework's service container** - XStatic relies on the `ContainerInterface` of the
    [Acclimate](https://github.com/jeremeamia/acclimate-container) library. Acclimate can be used to adapt third-party 
-   containers to its normalized container interface, which is what XStatic depends on.
+   containers to its normalized container interface, which is what XStatic depends on. (Note: we are working with the
+   [Container Interoperability project](https://github.com/container-interop/container-interop) as well.)
 2. **It works within any namespace** - XStatic injects an autoloader onto the stack, so no matter what namespace or
    scope you try to reference your aliased static interface from, it will pass through the XStatic autoloader and create
    the corresponding `class_alias` needed to make it work.
@@ -126,10 +122,12 @@ stub objects put into the application container.
 This library is heavily inspired by the [Facades](http://laravel.com/docs/facades) feature in the
 [Laravel 4 Framework](http://laravel.com/).
 
+## FAQs
+
+1. "Why do you need to declare those classes that only have the `getStaticAlias()` method?" — This class is what allows XStatic to determine what is being called, and what it is associated with. It's not possible to create a solution that does not require these classes to be defined, because there is **no** way in PHP to determine the name of the alias called.
+
 ## Disclaimer
 
-I would not consider myself to be *for* or *against* the use of static proxy interfaces (or "facades" in Laravel), but I do think it is cool that you can write code this way and have it work and still be testable. I foresee that developers,
-especially library and framework developers, may find ways to use, but not require, these static interfaces in order to
-make their projects appeal to a wider range of PHP developers.
+I would not consider myself to be *for* or *against* the use of static proxy interfaces (or Laravel's "facades"), but I do think it is cool that you can write code this way and have it work and still be testable. I am interested to see if developers, especially library and framework developers, may find ways to use, but not require, these static interfaces in order to make their projects appeal to a wider range of PHP developers.
 
 Feedback is welcome. :-)
