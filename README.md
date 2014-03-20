@@ -23,7 +23,7 @@ Laravel 4 "facades". It's called "XStatic", because it removes the static-ness s
 Sounds pretty good so far, right? Well, there are two additional features that really make XStatic cool:
 
 1. **It works with any framework's service container** - XStatic relies on the `ContainerInterface` of the
-   [Acclimate](https://github.com/jeremeamia/acclimate-container) library. Acclimate can be used to adapt third-party 
+   [Acclimate](https://github.com/jeremeamia/acclimate-container) library. Acclimate can be used to adapt third-party
    containers to its normalized container interface, which is what XStatic depends on. (Note: we are working with the
    [Container Interoperability project](https://github.com/container-interop/container-interop) as well.)
 2. **It works within any namespace** - XStatic injects an autoloader onto the stack, so no matter what namespace or
@@ -72,9 +72,9 @@ Your static class interfaces:
 ```php
 namespace MyApp\Service
 {
-    use Jeremeamia\XStatic\AbstractStaticClass;
+    use Jeremeamia\XStatic\StaticProxy;
 
-    class StaticPdo extends AbstractStaticClass
+    class StaticPdo extends StaticProxy
     {
         public function getStaticAlias()
         {
@@ -82,7 +82,7 @@ namespace MyApp\Service
         }
     }
 
-    class StaticTwig extends AbstractStaticClass
+    class StaticTwig extends StaticProxy
     {
         public function getStaticAlias()
         {
