@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="./tests/bootstrap.php">
     <testsuites>
-        <testsuite name="Acclimate Container Test Suite">
+        <testsuite name="XStatic Test Suite">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>
