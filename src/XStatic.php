@@ -14,18 +14,18 @@ use Interop\Container\ContainerInterface;
 class XStatic
 {
     /**
-     * @var ContainerInterface The container to inject into the static classes and that holds the actual instances
+     * @var ContainerInterface Container to inject into the static classes and that holds the actual instances
      */
     private $container;
 
     /**
-     * @var AliasLoaderInterface ???
+     * @var AliasLoaderInterface Loader object that loads the static proxies when aliases are referenced
      */
     private $aliasLoader;
 
     /**
-     * @param ContainerInterface   $container   A container that holds the actual instances
-     * @param AliasLoaderInterface $aliasLoader ???
+     * @param ContainerInterface   $container   Container that holds the actual instances
+     * @param AliasLoaderInterface $aliasLoader Loader object that loads the static proxies when aliases are referenced
      */
     public function __construct(ContainerInterface $container, AliasLoaderInterface $aliasLoader = null)
     {
@@ -36,9 +36,10 @@ class XStatic
     /**
      * Enables the static class proxies by injecting the container object and registering the XStatic autoloader
      *
-     * @param string|null $rootNamespace
+     * @param string $rootNamespace The namespace that the alias should be created in.
      *
      * @return bool
+     * @see \XStatic\AliasLoaderInterface::register()
      */
     public function enable($rootNamespace = null)
     {
@@ -56,10 +57,10 @@ class XStatic
     }
 
     /**
-     * ???
+     * Registers a static proxy class with XStatic and links it with an alias
      *
-     * @param string $alias
-     * @param string $proxyFqcn
+     * @param string $alias     Alias to associate with the static proxy class
+     * @param string $proxyFqcn FQCN of the static proxy class
      *
      * @return $this
      */
@@ -71,9 +72,9 @@ class XStatic
     }
 
     /**
-     * Sets the container object that provides the actual subject instances
+     * Sets the container object that provides the actual subjects' instances
      *
-     * @param ContainerInterface $container Container that provides the subjects
+     * @param ContainerInterface $container Instance of a Container (or Service Locator)
      *
      * @return $this
      */

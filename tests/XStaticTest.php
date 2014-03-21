@@ -17,7 +17,8 @@ class XStaticTest extends \PHPUnit_Framework_TestCase
 
         // Register a proxy and enable them
         $xStatic->registerProxy('Queue', 'XStatic\Test\Fixture\StaticQueue');
-        $xStatic->enable();
+        $enabled = $xStatic->enable();
+        $this->assertTrue($enabled);
 
         // Enable again, which should be a no-op
         $xStatic->enable();

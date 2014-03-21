@@ -5,22 +5,17 @@ namespace XStatic;
 class AliasLoader implements AliasLoaderInterface
 {
     /**
-     * @var array Registered aliases to static class interfaces
+     * @var array Aliases that can be loaded
      */
     private $aliases;
 
     /**
-     * @var bool ???
+     * @var bool Whether or not the loader has been registered
      */
     private $isRegistered = false;
 
     /**
-     * @var array Information about aliases that have been loaded
-     */
-    private $loadedAliases = array();
-
-    /**
-     * @var string ???
+     * @var string The namespace that the alias should be created in
      */
     private $rootNamespace = self::ROOT_GLOBAL;
 
@@ -32,15 +27,6 @@ class AliasLoader implements AliasLoaderInterface
         $this->aliases = $aliases;
     }
 
-    /**
-     * Creates an alias to a static class interface
-     *
-     * @param string $alias An alias to associate with a static class
-     * @param string $fqcn  An FQCN to a static class
-     *
-     * @return $this
-     * @throws \RuntimeException if you try to add an alias that has already been added
-     */
     public function addAlias($alias, $fqcn)
     {
         if (isset($this->aliases[$alias])) {
@@ -52,33 +38,11 @@ class AliasLoader implements AliasLoaderInterface
         return $this;
     }
 
-    public function getAliases()
-    {
-        return $this->aliases;
-    }
-
-    /**
-     * Returns information about aliases that have been loaded included what namespace they were loaded from
-     *
-     * @return array
-     */
-    public function getLoadedAliases()
-    {
-        return $this->loadedAliases;
-    }
-
     public function isRegistered()
     {
         return $this->isRegistered;
     }
 
-    /**
-     * Loads an alias by creating a real class alias to the requested class. This is used as an autoload function
-     *
-     * @param string $fqcn ???
-     *
-     * @return bool
-     */
     public function load($fqcn)
     {
         // Determine the alias and namespace from the requested class
@@ -96,16 +60,10 @@ class AliasLoader implements AliasLoaderInterface
 
             // Create the class alias
             class_alias($this->aliases[$alias], $namespace . $alias);
-
-            // Keep track of the namespace this alias was loaded into
-            if (!isset($this->loadedAliases[$alias])) {
-                $this->loadedAliases[$alias] = array();
-            }
-            $this->loadedAliases[$alias][] = $namespace ?: '\\';
         }
     }
 
-    public function register($rootNamespace = null)
+    public function register($rootNamespace = self::ROOT_GLOBAL)
     {
         if ($this->isRegistered) {
             return true;
