@@ -15,6 +15,9 @@ use Interop\Container\ContainerInterface;
  */
 class XStatic
 {
+    const ROOT_NAMESPACE_GLOBAL = false;
+    const ROOT_NAMESPACE_ANY = true;
+
     /**
      * @var ContainerInterface Container to inject into the static classes and that holds the actual instances
      */
@@ -43,7 +46,7 @@ class XStatic
      * @return bool
      * @see \XStatic\AliasLoaderInterface::register()
      */
-    public function enableProxies($rootNamespace = false)
+    public function enableProxies($rootNamespace = self::ROOT_NAMESPACE_GLOBAL)
     {
         // If XStatic is already enabled, this is a no-op
         if ($this->aliasLoader->isRegistered()) {

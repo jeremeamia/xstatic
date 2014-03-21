@@ -67,7 +67,7 @@ $acclimator = new ContainerAcclimator();
 $xs = new XStatic($acclimator->acclimate($app));
 $xs->registerProxy('View', 'MyApp\Proxy\Twig');
 $xs->registerProxy('DB', 'MyApp\Proxy\Pdo');
-$xs->enableProxies(true);
+$xs->enableProxies(XStatic::ROOT_NAMESPACE_ANY);
 
 $app->run();
 ```
