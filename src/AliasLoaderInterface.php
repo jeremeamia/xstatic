@@ -7,9 +7,6 @@ namespace XStatic;
  */
 interface AliasLoaderInterface
 {
-    const ROOT_GLOBAL = '';
-    const ROOT_ANY = '*';
-
     /**
      * Creates an alias to a static class
      *
@@ -36,12 +33,18 @@ interface AliasLoaderInterface
     public function load($fqcn);
 
     /**
-     * @param null $rootNamespace The namespace that the alias should be created in. There are 3 types of valid values:
-     *                            * self::ROOT_GLOBAL (i.e., '')- Alias created in the global namespace
-     *                            * self::ROOT_ANY (i.e., '*') - Alias created in the namespace where it is referenced
-     *                            * Custom namespace (e.g., 'Foo\\Bar\\') - Alias created in the provided namespace
+     * Registers the alias loader as an autoloader so that aliases can be resolved via `class_alias()`
+     *
+     * The root namespace can be configured such that the alias is created in a particular namespace. Valid values for
+     * the `$rootNamespace` parameter are as follows:
+     *
+     * - `false` - The alias will be created in the global namespace
+     * - `true` - The alias will be created in the namespace where it is referenced
+     * - Any specific namespace (e.g., 'Foo\\Bar') - The alias is created in the specified namespace
+     *
+     * @param bool|string $rootNamespace The namespace where the alias should be created
      *
      * @return bool Returns true if the registration was successful
      */
-    public function register($rootNamespace = null);
+    public function register($rootNamespace = false);
 }

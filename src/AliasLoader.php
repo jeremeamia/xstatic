@@ -17,7 +17,7 @@ class AliasLoader implements AliasLoaderInterface
     /**
      * @var string The namespace that the alias should be created in
      */
-    private $rootNamespace = self::ROOT_GLOBAL;
+    private $rootNamespace = false;
 
     /**
      * @param array $aliases
@@ -56,21 +56,21 @@ class AliasLoader implements AliasLoaderInterface
         // If the alias has been registered, handle it
         if (isset($this->aliases[$alias])) {
             // Determine what namespace the alias should be loaded into, depending on the root namespace
-            $namespace = ($this->rootNamespace === self::ROOT_ANY) ? $namespace : $this->rootNamespace;
+            $namespace = ($this->rootNamespace === true) ? $namespace : $this->rootNamespace;
 
             // Create the class alias
             class_alias($this->aliases[$alias], $namespace . $alias);
         }
     }
 
-    public function register($rootNamespace = self::ROOT_GLOBAL)
+    public function register($rootNamespace = false)
     {
         if ($this->isRegistered) {
             return true;
         }
 
         if ($rootNamespace) {
-            $this->rootNamespace = $rootNamespace;
+            $this->rootNamespace = is_string($rootNamespace) ? rtrim($rootNamespace, '\\') . '\\' : $rootNamespace;
         }
 
         return $this->isRegistered = spl_autoload_register(array($this, 'load'));

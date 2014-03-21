@@ -36,12 +36,12 @@ class XStatic
     /**
      * Enables the static class proxies by injecting the container object and registering the XStatic autoloader
      *
-     * @param string $rootNamespace The namespace that the alias should be created in.
+     * @param bool|string $rootNamespace The namespace that the alias should be created in.
      *
      * @return bool
      * @see \XStatic\AliasLoaderInterface::register()
      */
-    public function enable($rootNamespace = null)
+    public function enableProxies($rootNamespace = false)
     {
         // If XStatic is already enabled, this is a no-op
         if ($this->aliasLoader->isRegistered()) {
