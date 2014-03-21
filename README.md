@@ -18,7 +18,7 @@ developers, who argue that it makes the code more readable and contributes to *R
 
 Fortunately, in Laravel 4, Taylor Otwell developed a compromise. Laravel 4 has a concept called "facades" (Note: Not the
 same as the [Facade design pattern](http://en.wikipedia.org/wiki/Facade_pattern)). These act as a static interface, or
-proxy, to an actual object instance stored in a service container. The static interface is linked to the container using
+proxy, to an actual object instance stored in a service container. The static proxy is linked to the container using
 a few tricks, including defining class aliases via PHP's `class_alias()` function.
 
 **XStatic** is a library for enabling these static proxy interfaces in a similar way to the approach taken by Laravel 4
@@ -132,13 +132,12 @@ This library is heavily inspired by the [Facades](http://laravel.com/docs/facade
 1. "Why do you need to declare those classes that only have the `getInstanceIdentifier()` method?" — This class is what
 allows XStatic to determine what is being called, and what it is associated with. It's not possible to create a solution
 that does not require these classes to be defined, because there is **no** way in PHP to determine the name of the alias
-called, not even by examining a backtrace. If there was some kind of `get_called_alias()` function, that would be
-awesome.
+called, not even by examining a backtrace.
 
 ## Disclaimer
 
 I would not consider myself to be *for* or *against* the use of static proxy interfaces (or Laravel's "facades"), but I
-do think it is a fascinating and unique idea, and that is very cool that you can write code this way and still have it
-work and be testable. I am interested to see if developers, especially library and framework developers, find ways to
-use, but not require, these static proxy interface in order to make their projects appeal to a wider range of PHP
+do think it is a fascinating and unique idea, and that it is very cool that you can write code this way and still have
+it work and be testable. I am curious to see if developers, especially library and framework developers, find ways to
+use, *but not require*, these static proxy interface in order to make their projects appeal to a wider range of PHP
 developers.

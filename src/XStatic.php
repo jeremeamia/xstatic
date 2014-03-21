@@ -5,11 +5,13 @@ namespace XStatic;
 use Interop\Container\ContainerInterface;
 
 /**
+ * XStatic is a library for enabling static proxy interfaces, like Laravel 4 "facades", but in any PHP project.
+ *
  * XStatic allows you to call concrete methods on actual object instances from a container (service locator) by using
  * static method invocation on a proxy class. An alias is registered for the proxy class to make it easy to access.
  * Using static proxies gives the appearance that you are calling static methods, which is generally considered a code
  * smell; however, the methods are actually being delegated to an object instance using the __callStatic() magic method.
- * The technique is the same that is used by the Laravel framework with their unfortunately-named "facades" feature.
+ * The technique is the same that is used by the Laravel framework with their "facades" feature.
  */
 class XStatic
 {

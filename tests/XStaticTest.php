@@ -16,14 +16,14 @@ class XStaticTest extends \PHPUnit_Framework_TestCase
         $xStatic->setContainer(new Fixture\Container(array('queue' => new \SplQueue)));
 
         // Register a proxy and enable them
-        $xStatic->registerProxy('Queue', 'XStatic\Test\Fixture\StaticQueue');
-        $enabled = $xStatic->enable();
+        $xStatic->registerProxy('Queue', 'XStatic\Test\Fixture\QueueProxy');
+        $enabled = $xStatic->enableProxies();
         $this->assertTrue($enabled);
 
         // Enable again, which should be a no-op
-        $xStatic->enable();
+        $xStatic->enableProxies();
 
-        // Test the waters and see if the alias was loaded and works as a static interface
+        // Test to see if the alias was loaded and works as a static proxy
         \Queue::enqueue('foo');
         $queue = \Queue::getInstance();
         $this->assertInstanceOf('SplQueue', $queue);
