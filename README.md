@@ -140,9 +140,27 @@ stub objects put into the container.
 
 *Static interfaces without the static pitfalls.*
 
+## XStatic Concepts
+
+* **Static Proxy**
+* **Proxy Subject (Instance)**
+* **Proxy Manager**
+* **Alias**
+* **Alias Loader**
+* **Container**
+* **Instance Identifier**
+* **Root Namespace**
+
+## How it works
+
+The following diagram shows what happens when a Static Proxy is referenced, assuming it was previously added to the
+Proxy Manager.
+
+![XStatic Diagram](https://dl.dropboxusercontent.com/u/687294/published/xstatic-diagram.png)
+
 ## Inspiration
 
-This library is heavily inspired by the [Facades](http://laravel.com/docs/facades) feature in the
+This library is heavily inspired by the [Facades](http://laravel.com/docs/facades) system in the
 [Laravel 4 Framework](http://laravel.com/).
 
 ## Disclaimer

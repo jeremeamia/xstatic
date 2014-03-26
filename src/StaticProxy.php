@@ -5,20 +5,20 @@ namespace XStatic;
 use Interop\Container\ContainerInterface;
 
 /**
- * Implements of the basic Static Proxy logic using `__callStatic()`. This class must be extended in order to provide
- * the correct Instance Identifier
+ * Implements of the basic Static Proxy logic using `__callStatic()`. This class must be extended to create specific
+ * Static Proxies in order to provide the correct Instance Identifier for a Proxy Subject
  */
 abstract class StaticProxy
 {
     /**
-     * @var ContainerInterface The Container that provides the object instances
+     * @var ContainerInterface The Container that provides the Proxy Subjects
      */
     static protected $container;
 
     /**
-     * Sets the Container instance that will be used to retrieve the subject
+     * Sets the Container that will be used to retrieve the Proxy Subject
      *
-     * @param ContainerInterface $container The Container that provides the real subject
+     * @param ContainerInterface $container The Container that provides the real Proxy Subject
      *
      * @return mixed
      */
@@ -28,7 +28,7 @@ abstract class StaticProxy
     }
 
     /**
-     * Retrieves the instance from the Container that the Static Proxy is associated with
+     * Retrieves the instance of the Proxy Subject from the Container that the Static Proxy is associated with
      *
      * @return mixed
      * @throws \RuntimeException if the Container has not been set
@@ -36,14 +36,14 @@ abstract class StaticProxy
     public static function getInstance()
     {
         if (!(static::$container instanceof ContainerInterface)) {
-            throw new \RuntimeException('The subject cannot be retrieved because the Container is not set.');
+            throw new \RuntimeException('The Proxy Subject cannot be retrieved because the Container is not set.');
         }
 
         return static::$container->get(static::getInstanceIdentifier());
     }
 
     /**
-     * Retrieves the identifier that is used to retrieve the subject from the Container
+     * Retrieves the Instance Identifier that is used to retrieve the Proxy Subject from the Container
      *
      * @return string
      * @throws \BadMethodCallException if the method has not been implemented by a subclass
@@ -54,7 +54,7 @@ abstract class StaticProxy
     }
 
     /**
-     * Performs the proxying of the statically called method to the real subject in the Container
+     * Performs the proxying of the statically called method to the Proxy Subject in the Container
      *
      * @param string $method
      * @param array $args
