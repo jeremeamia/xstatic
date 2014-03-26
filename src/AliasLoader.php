@@ -15,7 +15,7 @@ class AliasLoader implements AliasLoaderInterface
     private $isRegistered = false;
 
     /**
-     * @var string The namespace that the alias should be created in
+     * @var string Namespace that the alias should be created in
      */
     private $rootNamespace = false;
 
@@ -29,11 +29,12 @@ class AliasLoader implements AliasLoaderInterface
 
     public function addAlias($alias, $fqcn)
     {
+        // Ensure aliases are only added once
         if (isset($this->aliases[$alias])) {
-            throw new \RuntimeException("The alias, {$alias}, has already been added and cannot be changed.");
-        } else {
-            $this->aliases[$alias] = $fqcn;
+            throw new \RuntimeException("The alias, {$alias}, has already been added and cannot be modified.");
         }
+
+        $this->aliases[$alias] = $fqcn;
 
         return $this;
     }
@@ -65,14 +66,17 @@ class AliasLoader implements AliasLoaderInterface
 
     public function register($rootNamespace = false)
     {
+        // Do nothing if the Alias Loader is already registered
         if ($this->isRegistered) {
             return true;
         }
 
+        // If a specific Root Namespace was provided, normalize it to end in a backslash
         if ($rootNamespace) {
             $this->rootNamespace = is_string($rootNamespace) ? rtrim($rootNamespace, '\\') . '\\' : $rootNamespace;
         }
 
+        // Register the `load()` method of this object as an autoloader
         return $this->isRegistered = spl_autoload_register(array($this, 'load'));
     }
 }

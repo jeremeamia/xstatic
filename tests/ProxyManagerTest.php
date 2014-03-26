@@ -2,26 +2,26 @@
 
 namespace XStatic\Test;
 
-use XStatic\XStatic;
+use XStatic\ProxyManager;
 
 /**
- * @covers \XStatic\XStatic
+ * @covers \XStatic\ProxyManager
  */
-class XStaticTest extends \PHPUnit_Framework_TestCase
+class ProxyManagerTest extends \PHPUnit_Framework_TestCase
 {
     public function testCanCreateStaticProxies()
     {
         // Instantiate XStatic and use setContainer
-        $xStatic = new XStatic($this->getMock('Interop\Container\ContainerInterface'));
-        $xStatic->setContainer(new Fixture\Container(array('queue' => new \SplQueue)));
+        $proxyManager = new ProxyManager($this->getMock('Interop\Container\ContainerInterface'));
+        $proxyManager->setContainer(new Fixture\Container(array('queue' => new \SplQueue)));
 
         // Register a proxy and enable them
-        $xStatic->registerProxy('Queue', 'XStatic\Test\Fixture\QueueProxy');
-        $enabled = $xStatic->enableProxies();
+        $proxyManager->addProxy('Queue', 'XStatic\Test\Fixture\QueueProxy');
+        $enabled = $proxyManager->enable();
         $this->assertTrue($enabled);
 
         // Enable again, which should be a no-op
-        $xStatic->enableProxies();
+        $proxyManager->enable();
 
         // Test to see if the alias was loaded and works as a static proxy
         \Queue::enqueue('foo');
