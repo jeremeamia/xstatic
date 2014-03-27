@@ -142,14 +142,18 @@ stub objects put into the container.
 
 ## XStatic Concepts
 
-* **Static Proxy**
-* **Proxy Subject (Instance)**
-* **Proxy Manager**
-* **Alias**
-* **Alias Loader**
-* **Container**
-* **Instance Identifier**
-* **Root Namespace**
+* **Static Proxy** – Static class that proxies static method calls to instance methods on its *Proxy Subject*.
+* **Proxy Subject (Instance)** – An object instance, stored in a *Container*, that is linked to a *Static Proxy*.
+* **Proxy Manager** – Mediating object used to associate *Static Proxies* to an *Alias Loader* and *Container*.
+* **Alias** – A memorable class name used as an alias to a fully-qualified class name of a *Static Proxy* class.
+* **Alias Loader** – Maintainer of the associations between *Aliases* and *Static Proxies*. It is injected into the
+  autoloader stack to handle Aliases as they are referenced.
+* **Container** – A IoC container (e.g., a Service Locator or DIC) that provides the *Proxy Subject* instances. It must
+  implement the container-interop project's `ContainerInterface`.
+* **Instance Identifier** – An identifier used to fetch a *Proxy Subject* from a *Container*. Each *Static Proxy* must
+  specify the Instance Identifier needed to get its Proxy Subject.
+* **Root Namespace** – The namespace that an *Alias* can be referenced in. This can be configured as the global
+  namespace (default), a specific namespace, or *any* namespace (i.e., the Alias works from any namespace).
 
 ## How it works
 
