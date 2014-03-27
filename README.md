@@ -1,15 +1,11 @@
 # XStatic
 
-*Static interfaces without the static pitfalls* • by [Jeremy Lindblom](https://twitter.com/jeremeamia)
+XStatic is a PHP library for enabling *static proxy interfaces*—similar to Laravel 4 "facades"—but with any
+PHP project. XStatic was created by [Jeremy Lindblom](https://twitter.com/jeremeamia).
 
-## Introduction
+### Introduction (Q&A)
 
-**TL;DR: XStatic is a PHP library for enabling *static proxy interfaces*—similar to Laravel 4 "facades"—but with any
-PHP project.**
-
-### Why?
-
-> Isn't using static methods considered a bad practice?
+> Facades? Static Proxies? Isn't using static methods considered a bad practice?
 
 Using static methods and classes makes your code harder to test. This is because your code becomes tightly coupled to
 the class being referenced statically, and mocking static methods for unit tests is difficult. For this and other
@@ -48,7 +44,7 @@ XStatic uses the same technique as Laravel's "facades" system, but provides two 
 Two reasons:
 
 1. It **removes the static-ness** of making static method invocations, since the method calls are proxied to actual
-   object instances.
+   object instances. Potential tagline: *"Static interfaces without the static pitfalls"*.
 2. It is pronounced like the word "ecstatic", because it is meant to provide developers (some of them at least) with
    a sense of joy.
 
@@ -65,7 +61,7 @@ Your application bootstrap:
 require 'vendor/autoload.php';
 
 use Acclimate\Container\ContainerAcclimator;
-use XStatic\XStatic;
+use XStatic\ProxyManager;
 use Silex\Application;
 use Silex\Provider\TwigServiceProvider;
 
