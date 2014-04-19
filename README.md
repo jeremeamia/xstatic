@@ -2,7 +2,7 @@
 
 [![License](https://poser.pugx.org/jeremeamia/xstatic/license.png)](https://packagist.org/packages/jeremeamia/xstatic) [![Latest Stable Version](https://poser.pugx.org/jeremeamia/xstatic/v/stable.png)](https://packagist.org/packages/jeremeamia/xstatic) [![Build Status](https://travis-ci.org/jeremeamia/xstatic.png)](https://travis-ci.org/jeremeamia/xstatic) [![Code Coverage](https://scrutinizer-ci.com/g/jeremeamia/xstatic/badges/coverage.png?s=8dc03c490e3c4e7c02ff0456c31a41aa66cb589a)](https://scrutinizer-ci.com/g/jeremeamia/xstatic/) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jeremeamia/xstatic/badges/quality-score.png?s=74a714f37287624679f53e501c92edd5b8f38fd7)](https://scrutinizer-ci.com/g/jeremeamia/xstatic/)
 
-XStatic is a PHP library for enabling *static proxy interfaces*—similar to Laravel 4 "facades"—but with any
+XStatic is a PHP library for enabling *static proxy interfaces*—similar to Laravel 4 "Facades"—but with any
 PHP project. XStatic was created by [Jeremy Lindblom](https://twitter.com/jeremeamia).
 
 ### Introduction (Q&A)
@@ -167,7 +167,7 @@ This library is heavily inspired by the [Facades](http://laravel.com/docs/facade
 
 ## Disclaimer
 
-I would not consider myself to be *for* or *against* the use of static proxy interfaces (or Laravel's "facades"), but I
+I would not consider myself to be *for* or *against* the use of static proxy interfaces (or Laravel's "Facades"), but I
 do think it is a fascinating and unique idea, and that it is very cool that you can write code this way and still have
 it work and be testable. I am curious to see if developers, especially library and framework developers, find ways to
 use, *but not require*, these static proxy interfaces in order to make their projects appeal to a wider range of PHP
