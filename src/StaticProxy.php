@@ -13,7 +13,7 @@ abstract class StaticProxy
     /**
      * @var ContainerInterface The Container that provides the Proxy Subjects
      */
-    static protected $container;
+    protected static $container;
 
     /**
      * Sets the Container that will be used to retrieve the Proxy Subject
