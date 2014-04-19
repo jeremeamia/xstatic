@@ -14,13 +14,13 @@ class AliasLoaderTest extends \PHPUnit_Framework_TestCase
         $loader = new AliasLoader();
 
         // Starts out empty
-        $this->assertEquals([], $this->readAttribute($loader, 'aliases'));
+        $this->assertEquals(array(), $this->readAttribute($loader, 'aliases'));
 
         // Internal array should contain added aliases
         $result = $loader->addAlias('Foo', 'Fake\Foo');
         $this->assertSame($loader, $result);
         $this->assertEquals(
-            ['Foo' => 'Fake\Foo'],
+            array('Foo' => 'Fake\Foo'),
             $this->readAttribute($loader, 'aliases')
         );
 
