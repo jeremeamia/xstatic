@@ -97,7 +97,7 @@ namespace MyApp\Proxy
 
     class Pdo extends StaticProxy
     {
-        public function getInstanceIdentifier()
+        public static function getInstanceIdentifier()
         {
             return 'db';
         }
@@ -105,7 +105,7 @@ namespace MyApp\Proxy
 
     class Twig extends StaticProxy
     {
-        public function getInstanceIdentifier()
+        public static function getInstanceIdentifier()
         {
             return 'twig';
         }
