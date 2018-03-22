@@ -2,7 +2,7 @@
 
 namespace XStatic;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * Implements of the basic Static Proxy logic using `__callStatic()`. This class must be extended to create specific

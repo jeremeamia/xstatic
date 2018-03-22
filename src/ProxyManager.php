@@ -2,7 +2,7 @@
 
 namespace XStatic;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * The Proxy Manager is the mediator between the Static Proxies, Container, and Alias Loader. It is the main object
