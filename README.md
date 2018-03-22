@@ -34,7 +34,7 @@ thank [Taylor Otwell](https://twitter.com/taylorotwell) for developing this tech
 XStatic uses the same technique as Laravel's "facades" system, but provides two additional, but important, features:
 
 1. **It works with any framework's service container** - XStatic relies on the `ContainerInterface` of the
-   [container-interop](https://github.com/container-interop/container-interop) project. You can use the [Acclimate
+   [PSR-11](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-11-container.md) standard. You can use the [Acclimate
    library](https://github.com/jeremeamia/acclimate-container) to adapt any third-party containers to the normalized
    container interface that XStatic depends on.
 2. **It works within any namespace** - XStatic injects an autoloader onto the stack, so no matter what namespace or
@@ -147,7 +147,7 @@ stub objects put into the container.
 * **Alias Loader** – Maintainer of the associations between *Aliases* and *Static Proxies*. It is injected into the
   autoloader stack to handle Aliases as they are referenced.
 * **Container** – A IoC container (e.g., a Service Locator or DIC) that provides the *Proxy Subject* instances. It must
-  implement the container-interop project's `ContainerInterface`.
+  implement the PSR-11 stardard's `ContainerInterface`.
 * **Instance Identifier** – An identifier used to fetch a *Proxy Subject* from a *Container*. Each *Static Proxy* must
   specify the Instance Identifier needed to get its Proxy Subject.
 * **Root Namespace** – The namespace that an *Alias* can be referenced in. This can be configured as the global
