@@ -2,7 +2,7 @@
 
 namespace XStatic\Test\Fixture;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class Container extends \ArrayObject implements ContainerInterface
 {

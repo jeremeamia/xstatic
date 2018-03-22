@@ -12,7 +12,7 @@ class ProxyManagerTest extends \PHPUnit_Framework_TestCase
     public function testCanCreateStaticProxies()
     {
         // Instantiate XStatic and use setContainer
-        $proxyManager = new ProxyManager($this->getMock('Interop\Container\ContainerInterface'));
+        $proxyManager = new ProxyManager($this->getMock('Psr\Container\ContainerInterface'));
         $proxyManager->setContainer(new Fixture\Container(array('queue' => new \SplQueue)));
 
         // Register a proxy and enable them
