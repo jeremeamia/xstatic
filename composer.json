@@ -10,6 +10,7 @@
             "role": "Developer"
         }
     ],
+    "abandoned": "lhsazevedo/restatic",
     "require": {
         "php": ">=5.3.3",
         "container-interop/container-interop": "~1.0"
