@@ -1,3 +1,6 @@
+# :no_entry: This is no longer supported
+Please consider using [ReStatic](https://github.com/lhsazevedo/restatic) instead.
+
 # XStatic
 
 [![License](https://poser.pugx.org/jeremeamia/xstatic/license.png)](https://packagist.org/packages/jeremeamia/xstatic) [![Latest Stable Version](https://poser.pugx.org/jeremeamia/xstatic/v/stable.png)](https://packagist.org/packages/jeremeamia/xstatic) [![Build Status](https://travis-ci.org/jeremeamia/xstatic.png)](https://travis-ci.org/jeremeamia/xstatic) [![Code Coverage](https://scrutinizer-ci.com/g/jeremeamia/xstatic/badges/coverage.png?s=8dc03c490e3c4e7c02ff0456c31a41aa66cb589a)](https://scrutinizer-ci.com/g/jeremeamia/xstatic/) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jeremeamia/xstatic/badges/quality-score.png?s=74a714f37287624679f53e501c92edd5b8f38fd7)](https://scrutinizer-ci.com/g/jeremeamia/xstatic/)
